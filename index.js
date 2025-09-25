@@ -1,6 +1,18 @@
 const { input, select, checkbox } = require('@inquirer/prompts');
+const fs = require('fs').promises;
 
-let metas = []
+
+async function salvarMetas() {
+    try {
+        await fs.writeFile('metas.json', JSON.stringify(metas, null, 2));
+        mostrarMensagem("✔️  Metas salvas com sucesso!");
+    } catch (error) {
+        mostrarMensagem("❌ Erro ao salvar metas: ",  error.mensagem);
+    }
+}
+
+
+let metas = [];
 
 function limparTela() {
     console.clear();
@@ -69,6 +81,7 @@ async function iniciar() {
         }
 
         await executarAcao(opcao);
+        await salvarMetas();
     }
 }
 
