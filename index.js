@@ -19,6 +19,7 @@ async function mostrarMenu() {
             { name: "Marcar metas como realizadas", value: "marcar" },
             { name: "Mostrar metas realizadas", value: "realizadas" },
             { name: "Mostrar metas abertas", value: "abertas" },
+            { name: "Deletar metas", value: "deletar" },
             { name: "Sair", value: "sair" }
         ]
     });
@@ -42,7 +43,10 @@ async function executarAcao(opcao) {
             break; 
         case "abertas":
             await metasAbertas();
-            break;       
+            break;
+        case "deletar":
+            await deletarMetas();
+            break;           
         case "sair":
             break;
         default:
@@ -161,6 +165,35 @@ async function metasAbertas() {
     });
 
     mostrarMensagem(`Você ainda tem ${abertas.length} metas para concluir. Vamos lá! 🚀`);
+}
+
+async function deletarMetas() {
+    
+    if (metas.length === 0) {
+        mostrarMensagem("❌ Não existem metas cadastradas!");
+        return;
+    }
+
+    const metasParaDeletar = await checkbox({
+        message: "📝 Selecione as metas que deseja deletar:",
+        choices: metas.map(meta => 
+            ({ name: meta.value, 
+               value: meta.value, 
+               checked: false
+            })),
+    });
+
+    if(metasParaDeletar.length === 0) {
+        mostrarMensagem("‼️ Nenhuma meta foi selecionada para deletar")
+        return;
+    }
+
+    metasParaDeletar.forEach(metaParaDeletar => {
+        metas = metas.filter(meta => meta.value !== metaParaDeletar);
+    })
+
+    mostrarMensagem("✅ Metas deletadas com sucesso!");
+
 }
 
 iniciar();
