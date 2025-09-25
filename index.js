@@ -18,6 +18,7 @@ async function mostrarMenu() {
             { name: "Mostrar todas as metas", value: "mostrar" },
             { name: "Marcar metas como realizadas", value: "marcar" },
             { name: "Mostrar metas realizadas", value: "realizadas" },
+            { name: "Mostrar metas abertas", value: "abertas" },
             { name: "Sair", value: "sair" }
         ]
     });
@@ -38,7 +39,10 @@ async function executarAcao(opcao) {
             break;
         case "realizadas":
             await metasRealizadas();
-            break;    
+            break; 
+        case "abertas":
+            await metasAbertas();
+            break;       
         case "sair":
             break;
         default:
@@ -141,6 +145,22 @@ async function metasRealizadas() {
     mostrarMensagem(`Parabéns Você já concluiu ${realizadas.length} metas! 🎉`);
 
     
+}
+
+async function metasAbertas() {
+    const abertas = metas.filter(meta => !meta.checked);
+
+    if (abertas.length === 0) {
+        mostrarMensagem("❌ Não existem metas abertas!");
+        return;
+    }
+
+    console.log("📋 Metas Abertas:");
+    abertas.forEach((meta, index) => {
+        console.log(`${index + 1}. ${meta.value}`);
+    });
+
+    mostrarMensagem(`Você ainda tem ${abertas.length} metas para concluir. Vamos lá! 🚀`);
 }
 
 iniciar();
