@@ -1,9 +1,14 @@
-const { input, select } = require('@inquirer/prompts');
-
-console.log("=== 📱Sistema de Metas Pessoais ===");
-console.log("Bem-vindo ao sistema de metas pessoais!");
+const { input, select, checkbox } = require('@inquirer/prompts');
 
 let metas = []
+
+function limparTela() {
+    console.clear();
+}
+
+function mostrarMensagem(mensagem) {
+    console.log(`\n${mensagem}\n`);
+}
 
 async function mostrarMenu() {
     const opcao = await select({
@@ -11,6 +16,8 @@ async function mostrarMenu() {
         choices: [
             { name: "Adicionar nova meta", value: "adicionar" },
             { name: "Mostrar todas as metas", value: "mostrar" },
+            { name: "Marcar metas como realizadas", value: "marcar" },
+            { name: "Mostrar metas realizadas", value: "realizadas" },
             { name: "Sair", value: "sair" }
         ]
     });
@@ -26,8 +33,13 @@ async function executarAcao(opcao) {
         case "mostrar":
             await mostrarMetas();
             break;
+        case "marcar":
+            await marcarMetas();
+            break;
+        case "realizadas":
+            await metasRealizadas();
+            break;    
         case "sair":
-            console.log("Saindo do sistema. Até mais! 👋🏽");
             break;
         default:
             console.log("Opção inválida. Tente novamente. ❌");
@@ -35,11 +47,16 @@ async function executarAcao(opcao) {
 }
 
 async function iniciar() {
+    limparTela();
+    mostrarMensagem("=== 📱Sistema de Metas Pessoais ===");
+
     while (true) {
         const opcao = await mostrarMenu();
 
         if (opcao === "sair") {
             await executarAcao(opcao);
+            limparTela();
+            mostrarMensagem("Até mais! 👋🏽");
             break;
         }
 
@@ -48,32 +65,82 @@ async function iniciar() {
 }
 
 async function adicionarMeta() {
-  let novaMeta = await input({
-    message: "Digite sua nova meta pessoal:"
+  const descricao = await input({
+    message: "📝 Digite sua nova meta pessoal:"
   });
 
-  if (novaMeta.length === 0) {
-    console.log("❌ Meta inválida. Tente novamente.");
+  if (descricao.length === 0) {
+    mostrarMensagem("❌ Meta inválida. Tente novamente.");
     return;
+  }
+
+  const novaMeta = {
+    value: descricao,
+    checked: false
   }
 
   metas.push(novaMeta);
 
-  console.log("✅ Meta adicionada com sucesso!");
+  mostrarMensagem("✅ Meta adicionada com sucesso!");
 }
 
 async function mostrarMetas() {
-    console.log("Suas Metas Pessoais:");
+    if (metas.length === 0) {
+        mostrarMensagem(" ⛔ Não existem metas cadastradas!");
+        return;
+    }
+
+    console.log("📚 Suas Metas Pessoais:");
     metas.forEach((meta, index) => {
-      console.log(`${index + 1}. ${meta}`);
+      const status = meta.checked ? "[x]" : "[ ]";  
+      console.log(`${status} ${index + 1}. ${meta.value}`);
     });
 }
 
-iniciar();
-/*async function main() {
-  await adicionarMeta();
-  await mostrarMetas();
+
+async function marcarMetas() {
+    if (metas.length === 0) {
+        mostrarMensagem(" ⛔ Não existem metas cadastradas!");
+        return;
+    }
+
+    const metasSelecionadas = await checkbox({
+        message: "📝 Selecione as metas que você já concluiu:",
+        choices: metas.map(meta => 
+            ({ name: meta.value, 
+               value: meta.value, 
+               checked: meta.checked 
+            })),
+    })
+
+    metas.forEach(meta => meta.checked = false);
+
+    metasSelecionadas.forEach(metaSelecionada => {
+        const meta = metas.find(m => m.value === metaSelecionada);
+        if (meta) {
+            meta.checked = true;
+        }
+    });
+
+    mostrarMensagem("✅ Metas atualizadas com sucesso!");
 }
 
-main();
-*/
+async function metasRealizadas() {
+    const realizadas = metas.filter(meta => meta.checked);
+
+    if (realizadas.length === 0) {
+        mostrarMensagem("❌ Não existem metas realizadas!");
+        return;
+    }
+
+    console.log("✅ Metas Realizadas:");
+    realizadas.forEach((meta, index) => {
+        console.log(`${index + 1}. ${meta.value}`);
+    });
+
+    mostrarMensagem(`Parabéns Você já concluiu ${realizadas.length} metas! 🎉`);
+
+    
+}
+
+iniciar();
