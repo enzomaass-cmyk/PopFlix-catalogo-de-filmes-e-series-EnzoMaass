@@ -11,6 +11,17 @@ async function salvarMetas() {
     }
 }
 
+async function carregarMetas() {
+    try {
+        const dados = await fs.readFile('metas.json', 'utf-8');
+        metas = JSON.parse(dados);
+        mostrarMensagem("✔️  Metas carregadas com sucesso!");
+    } catch (error) {
+        metas = [];
+        mostrarMensagem("⚠️  Nenhum arquivo de metas encontrado. Começando com uma lista vazia.");
+    }
+}
+
 
 let metas = [];
 
@@ -68,6 +79,7 @@ async function executarAcao(opcao) {
 
 async function iniciar() {
     limparTela();
+    await carregarMetas();
     mostrarMensagem("=== 📱Sistema de Metas Pessoais ===");
 
     while (true) {
