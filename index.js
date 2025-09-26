@@ -1,7 +1,6 @@
 const { input, select, checkbox } = require('@inquirer/prompts');
 const fs = require('fs').promises;
 
-
 async function salvarMetas() {
     try {
         await fs.writeFile('metas.json', JSON.stringify(metas, null, 2));
@@ -15,10 +14,10 @@ async function carregarMetas() {
     try {
         const dados = await fs.readFile('metas.json', 'utf-8');
         metas = JSON.parse(dados);
-        mostrarMensagem("✔️  Metas carregadas com sucesso!");
+        definirMensagem("✔️  Metas carregadas com sucesso!");
     } catch (error) {
         metas = [];
-        mostrarMensagem("⚠️  Nenhum arquivo de metas encontrado. Começando com uma lista vazia.");
+        definirMensagem("⚠️  Nenhum arquivo de metas encontrado. Começando com uma lista vazia.");
     }
 }
 
@@ -28,9 +27,8 @@ function limparTela() {
     console.clear();
 }
 
-function definirMensagem(mensagem) {
-    mensagemAtual = novaMensagem;
-}
+let mensagem = "Teste";
+
 
 function mostrarMensagemAtual() {
     if (mensagemAtual) {
