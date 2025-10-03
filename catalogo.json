@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1759451659064,
+    "titulo": "Dexter",
+    "tipo": "série",
+    "genero": "ação",
+    "ano": 2005,
+    "plataforma": null,
+    "status": "quero_assistir",
+    "temporadas": 0,
+    "episodiosTotal": 0,
+    "episodiosAssistidos": 0,
+    "nota": null,
+    "dataInicio": null
+  },
+  {
+    "id": 1759452327157,
+    "titulo": "dexter",
+    "tipo": "série",
+    "genero": "ação",
+    "ano": 2005,
+    "plataforma": "TV",
+    "status": "assistido",
+    "duracaoMinutos": null,
+    "temporadas": 8,
+    "episodiosTotal": 100,
+    "episodiosAssistidos": 14,
+    "nota": 10,
+    "dataInicio": null
+  }
+]

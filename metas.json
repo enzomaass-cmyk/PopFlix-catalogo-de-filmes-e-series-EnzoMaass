@@ -2,5 +2,9 @@
   {
     "value": "teste",
     "checked": false
+  },
+  {
+    "value": "fazer o app 3",
+    "checked": false
   }
 ]
