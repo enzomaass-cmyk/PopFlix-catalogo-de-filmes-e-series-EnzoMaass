@@ -37,4 +37,4 @@ Enzo Maass - Contato email: enzoonline1404@gmail.com
 Neste projeto aprendi a declarar constantes, fazer funções, fazer um menu de seleção ,usar estrutura de dados, usar entrada e saída de dados usar operadores e aplicar os conhecimentos de portugol e javascript juntando tudo isso.
 
 ## Link do canva
-https://www.canva.com/design/DAG0sB1Onhg/5U7HiCp1DbZsn5-guDdd9w/edit
+https://www.canva.com/design/DAG0sB1Onhg/0MmOPjcDTKNHpvyHDnDGrQ/view?utm_content=DAG0sB1Onhg&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3d9fbca0c3
