@@ -27,5 +27,20 @@
     "episodiosAssistidos": 14,
     "nota": 10,
     "dataInicio": null
+  },
+  {
+    "id": 1759959554150,
+    "titulo": "One Piece",
+    "tipo": "série",
+    "genero": "aventura",
+    "ano": 1999,
+    "plataforma": "TV",
+    "status": "quero_assistir",
+    "duracaoMinutos": null,
+    "temporadas": 1,
+    "episodiosTotal": 1200,
+    "episodiosAssistidos": 0,
+    "nota": null,
+    "dataInicio": null
   }
 ]
